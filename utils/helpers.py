@@ -1,8 +1,9 @@
 import torch as t
 import matplotlib.pyplot as plt
 
+
 def set_plotting_settings():
-    plt.style.use('seaborn-v0_8')
+    plt.style.use("seaborn-v0_8")
     params = {
         "ytick.color": "black",
         "xtick.color": "black",
@@ -11,15 +12,22 @@ def set_plotting_settings():
         "font.family": "serif",
         "font.size": 13,
         "figure.autolayout": True,
-        'figure.dpi': 600,
+        "figure.dpi": 600,
     }
     plt.rcParams.update(params)
 
-    custom_colors = ['#377eb8', '#ff7f00', '#4daf4a',
-                     '#f781bf', '#a65628', '#984ea3',
-                     '#999999', '#e41a1c', '#dede00']
-    plt.rcParams['axes.prop_cycle'] = plt.cycler(color=custom_colors)
-
+    custom_colors = [
+        "#377eb8",
+        "#ff7f00",
+        "#4daf4a",
+        "#f781bf",
+        "#a65628",
+        "#984ea3",
+        "#999999",
+        "#e41a1c",
+        "#dede00",
+    ]
+    plt.rcParams["axes.prop_cycle"] = plt.cycler(color=custom_colors)
 
 
 def add_vector_from_position(matrix, vector, position_ids, from_pos=None):
@@ -65,21 +73,22 @@ def make_tensor_save_suffix(layer, model_name_path):
 
 def get_model_path(size: str, is_base: bool):
     if is_base:
-        return f"meta-llama/Llama-2-{size}-hf"
+        return f"meta-llama/Llama-3.1-{size}"
     else:
-        return f"meta-llama/Llama-2-{size}-chat-hf"
+        return f"meta-llama/Llama-3.1-{size}-Instruct"
+
 
 def model_name_format(name: str) -> str:
     name = name.lower()
-    is_chat = "chat" in name
-    is_7b = "7b" in name
+    is_chat = "Instruct" in name
+    is_8b = "8B" in name
     if is_chat:
-        if is_7b:
-            return "Llama 2 Chat 7B"
+        if is_8b:
+            return "Llama 3.1 8B Instruct"
         else:
-            return "Llama 2 Chat 13B"
+            return "Llama 3.1 70B Instruct"
     else:
-        if is_7b:
-            return "Llama 2 7B"
+        if is_8b:
+            return "Llama 3.1 8B"
         else:
-            return "Llama 2 13B"
+            return "Llama 3.1 70B"

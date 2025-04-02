@@ -10,6 +10,14 @@ ADD_FROM_POS_CHAT = E_INST
 ADD_FROM_POS_BASE = BASE_RESPONSE
 
 
+def get_instruction_start_index(tokenizer, prompt: str) -> int:
+    if prompt is None:
+        return 0  # No system prompt provided; start at the beginning.
+    prefix = B_SYS + prompt + E_SYS
+    prefix_tokens = tokenizer.encode(prefix)
+    return len(prefix_tokens)
+
+
 def tokenize_llama_chat(
     tokenizer: PreTrainedTokenizer,
     user_input: str,
