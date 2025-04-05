@@ -6,7 +6,7 @@ from behaviors import ALL_BEHAVIORS
 @dataclass
 class SteeringSettings:
     behavior: str = "sycophancy"
-    type: Literal["open_ended", "ab", "truthful_qa", "mmlu"] = "ab"
+    type: Literal["open_ended", "ab", "truthful_qa", "mmlu", "reasoning"] = "ab"
     system_prompt: Optional[Literal["pos", "neg"]] = None
     override_vector: Optional[int] = None
     override_vector_model: Optional[str] = None
@@ -16,7 +16,7 @@ class SteeringSettings:
 
     def __post_init__(self):
         assert self.behavior in ALL_BEHAVIORS, f"Invalid behavior {self.behavior}"
-        
+
     def make_result_save_suffix(
         self,
         layer: Optional[int] = None,
@@ -67,7 +67,7 @@ class SteeringSettings:
                     matching_files.append(filename)
 
         return [os.path.join(directory, f) for f in matching_files]
-    
+
     def get_formatted_model_name(self):
         if self.use_base_model:
             if self.model_size == "7b":
@@ -79,4 +79,4 @@ class SteeringSettings:
                 return "Llama 2 7B Chat"
             else:
                 return "Llama 2 13B Chat"
-        
+
