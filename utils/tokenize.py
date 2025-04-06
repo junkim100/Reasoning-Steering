@@ -33,3 +33,11 @@ def tokenize_llama_base(
     if model_output is not None:
         input_content += f"{BASE_RESPONSE} {model_output.strip()}"
     return tokenizer.encode(input_content)
+
+
+def get_instruction_start_index(tokenizer, sys_prompt: str, inst_prompt: str) -> int:
+    if sys_prompt is None or inst_prompt is None:
+        return 0  # No system prompt provided; start at the beginning.
+    prefix = B_SYS + sys_prompt + E_SYS + B_INST + inst_prompt + E_INST
+    prefix_tokens = tokenizer.encode(prefix)
+    return len(prefix_tokens)
